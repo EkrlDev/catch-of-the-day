@@ -29,9 +29,8 @@ class Inventory extends React.Component {
   }
 
   authHandler = async (authData) => {
-    console.log(authData)
     const store = await base.fetch(this.props.storeId, {context: this})
-    console.log(store)
+
     if(!store.owner) {
       await base.post(`${this.props.storeId}/owner`, {
         data: authData.user.uid
@@ -44,6 +43,7 @@ class Inventory extends React.Component {
     })
   }
   authenticate = (provider) => {
+    
     const authProvider = new firebase.auth[`${provider}AuthProvider`]();
     firebaseApp.auth().signInWithPopup(authProvider).then(this.authHandler);
   }
@@ -63,6 +63,8 @@ class Inventory extends React.Component {
     }
 
     if(this.state.uid !== this.state.owner) {
+      console.log(this.state.uid);
+      console.log(this.state.owner);
       return (
         <div>
           <p>Sorry! You are not the owner.</p>
@@ -70,6 +72,9 @@ class Inventory extends React.Component {
         </div>
       )
     }
+
+    console.log(this.state.uid);
+    console.log(this.state.owner);
     return (
       <div className="inventory">
         <h2>Inventory</h2>
